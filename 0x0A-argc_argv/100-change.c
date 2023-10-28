@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 	}
 
 	coins = 0;
-	
+
 	num_denominations = sizeof(denominations) / sizeof(denominations[0]);
 
 	for (i = 0; i < num_denominations; i++)
