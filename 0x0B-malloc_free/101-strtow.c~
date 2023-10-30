@@ -1,0 +1,100 @@
+#include "main.h"
+#include <stdlib.h>
+
+/**
+ * count_words - Count the number of words in a string.
+ * @str: The input string.
+ * Return: The number of words.
+ */
+int count_words(char *str)
+{
+	int count = 0;
+	int is_word = 0;
+
+	while (*str)
+	{
+		if (*str == ' ' || *str == '\t' || *str == '\n')
+		{
+			is_word = 0;
+		}
+		else if (!is_word)
+		{
+			is_word = 1;
+			count++;
+		}
+		str++;
+	}
+
+	return count;
+}
+
+/**
+ * split_string - Split the string into words
+ * @str: The input string.
+ * @count: The number of words.
+ * Return: A pointer to an array of strings (words).
+ */
+char **split_string(char *str, int count)
+{
+	char **words = malloc((count + 1) * sizeof(char *));
+	if (!words)
+	{
+		return (NULL);
+	}
+
+	int i = 0;
+	int in_word = 0;
+	char *start = NULL;
+
+	while (*str)
+	{
+		if (*str == ' ' || *str == '\t' || *str == '\n')
+		{
+			if (in_word)
+			{
+				*str = '\0';
+				words[i] = start;
+				in_word = 0;
+				i++;
+			}
+		}
+		else if (!in_word)
+		{
+			start = str;
+			in_word = 1;
+		}
+		str++;
+	}
+
+	if (in_word)
+	{
+		words[i] = start;
+		i++;
+	}
+
+	words[i] = NULL;
+	return (words);
+}
+
+/**
+ * strtow - Split a string into words.
+ * @str: The input string.
+ * Return: A pointer to an array of strings (words).
+ */
+char **strtow(char *str)
+{
+	if (str == NULL || *str == '\0')
+	{
+		return (NULL);
+	}
+
+	int count = count_words(str);
+	if (count == 0)
+	{
+		return (NULL);
+	}
+
+	char **words = split_string(str, count);
+
+	return (words);
+}
