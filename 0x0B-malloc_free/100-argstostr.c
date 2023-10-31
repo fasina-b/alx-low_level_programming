@@ -9,13 +9,13 @@
  */
 char *argstostr(int ac, char **av)
 {
+	int total_length;
+	int i, j, k;
+	char *result;
+
+	total_length = 0;
 	if (ac == 0 || av == NULL)
 		return (NULL);
-
-	int total_length = 0;
-	int i;
-	int j;
-	char *result;
 
 	for (i = 0; av[i]; i++)
 		total_length += _strlen(av[i]) + 1;
@@ -24,11 +24,9 @@ char *argstostr(int ac, char **av)
 	if (result == NULL)
 		return (NULL);
 
-	int k;
-
 	for (i = 0, j = 0; av[i]; i++)
 	{
-		for k = 0; av[i][k]; k++)
+		for (k = 0; av[i][k]; k++)
 			result[j++] = av[i][k];
 		result[j++] = '\n';
 	}
@@ -38,14 +36,16 @@ char *argstostr(int ac, char **av)
 }
 
 /**
- * _strlen - Calculate the length of a string.
- * @s: The input string.
+ * _strlen - Returns the length of a string.
+ * @s: The string to be measured.
+ *
  * Return: The length of the string.
  */
 int _strlen(char *s)
 {
-	int length = 0;
+	int length;
 
+	length = 0;
 	while (s[length])
 		length++;
 	return (length);
