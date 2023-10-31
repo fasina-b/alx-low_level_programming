@@ -8,9 +8,11 @@
  */
 int count_words(char *str)
 {
-	int count = 0;
-	int is_word = 0;
+	int count;
+	int is_word;
 
+	count = 0;
+	is_word = 0;
 	while (*str)
 	{
 		if (*str == ' ' || *str == '\t' || *str == '\n')
@@ -29,24 +31,31 @@ int count_words(char *str)
 }
 
 /**
- * split_string - Split the string into words
- * @str: The input string.
+ * allocate_words - Allocate memory for an array of words.
  * @count: The number of words.
- * Return: A pointer to an array of strings (words).
+ * Return: A pointer to the allocated memory.
  */
-char **split_string(char *str, int count)
+char **allocate_words(int count)
 {
-	char **words = malloc((count + 1) * sizeof(char *));
+	char **words;
 
-	if (!words)
-	{
-		return (NULL);
-	}
+	words = malloc((count + 1) * sizeof(char *));
+	return (words);
+}
 
-	int i = 0;
-	int in_word = 0;
+/**
+ * store_words - Split the string into words and store them in an array.
+ * @str: The input string.
+ * @words: The array to store words.
+ */
+void store_words(char *str, char **words)
+{
+	int i;
+	int in_word;
 	char *start = NULL;
 
+	i = 0;
+	in_word = 0;
 	while (*str)
 	{
 		if (*str == ' ' || *str == '\t' || *str == '\n')
@@ -74,7 +83,6 @@ char **split_string(char *str, int count)
 	}
 
 	words[i] = NULL;
-	return (words);
 }
 
 /**
@@ -84,19 +92,27 @@ char **split_string(char *str, int count)
  */
 char **strtow(char *str)
 {
+	int count;
+	char **words;
+
 	if (str == NULL || *str == '\0')
 	{
 		return (NULL);
 	}
 
-	int count = count_words(str);
-
+	count = count_words(str);
 	if (count == 0)
 	{
 		return (NULL);
 	}
 
-	char **words = split_string(str, count);
+	words = allocate_words(count);
+	if (!words)
+	{
+		return (NULL);
+	}
+
+	store_words(str, words);
 
 	return (words);
 }
