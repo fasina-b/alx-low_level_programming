@@ -2,6 +2,13 @@
 #include <stdlib.h>
 
 /**
+ * _strlen - Returns the length of a string.
+ * @s: The string to be measured.
+ * Return: The length of the string.
+ */
+int _strlen(char *s);
+
+/**
  * argstostr - Concatenate all the arguments into a single string.
  * @ac: The number of arguments.
  * @av: An array of strings (arguments).
