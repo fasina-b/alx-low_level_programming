@@ -4,9 +4,9 @@
 #include <stdarg.h>
 
 /**
- * struct format_t - Struct to match format specifier with corresponding function
+ * struct format_t - Struct to match format specifier
  * @specifier: The format specifier
- * @func: The function pointer to handle the specifier
+ * @func: The function pointer
  */
 typedef struct format_t
 {
