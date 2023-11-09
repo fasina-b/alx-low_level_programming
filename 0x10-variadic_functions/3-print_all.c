@@ -1,0 +1,83 @@
+#include "variadic_functions.h"
+#include <stdio.h>
+
+/**
+ * print_all - Prints anything based on the format specifier
+ * @format: A list of types of arguments passed to the function
+ */
+void print_all(const char * const format, ...)
+{
+	va_list args;
+	unsigned int i = 0, j = 0;
+	char *separator = "";
+	format_t formats[] = {
+		{'c', print_char},
+		{'i', print_int},
+		{'f', print_float},
+		{'s', print_string},
+		{0, NULL}
+	};
+
+	va_start(args, format);
+
+	while (format && format[i])
+	{
+		j = 0;
+		while (formats[j].specifier)
+		{
+			if (format[i] == formats[j].specifier)
+			{
+				printf("%s", separator);
+				formats[j].func(args);
+				separator = ", ";
+			}
+			j++;
+		}
+		i++;
+	}
+
+	va_end(args);
+	printf("\n");
+}
+
+/**
+ * print_char - Prints a character
+ * @args: A list of arguments
+ */
+void print_char(va_list args)
+{
+	printf("%c", va_arg(args, int));
+}
+
+/**
+ * print_int - Prints an integer
+ * @args: A list of arguments
+ */
+void print_int(va_list args)
+{
+	printf("%d", va_arg(args, int));
+}
+
+/**
+ * print_float - Prints a float
+ * @args: A list of arguments
+ */
+void print_float(va_list args)
+{
+	printf("%f", va_arg(args, double));
+}
+
+/**
+ * print_string - Prints a string
+ * @args: A list of arguments
+ */
+void print_string(va_list args)
+{
+char *str;
+
+	str = va_arg(args, char *);
+
+	if (str == NULL)
+		str = "(nil)";
+	printf("%s", str);
+}
