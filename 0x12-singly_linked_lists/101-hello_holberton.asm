@@ -1,18 +1,20 @@
-section .data
-    hello db 'Hello, Holberton', 0
+SECTION .data
+    my_msg:  db "Hello, Holberton", 0
+    my_fmt:  db "%s", 10, 0
 
-section .text
-    global _start_asm
+SECTION .text
+    extern printf
+    global main
 
-_start_asm:
-    ; Write the string to stdout
-    mov rax, 1        ; syscall number for sys_write
-    mov rdi, 1        ; file descriptor 1 is stdout
-    mov rsi, hello    ; pointer to the string
-    mov rdx, 16       ; length of the string
-    syscall           ; make syscall
+main:
+    ; Set up arguments for printf
+    mov esi, my_msg   ; pointer to the string
+    mov edi, my_fmt   ; pointer to the format string
+    mov eax, 0        ; format specifier (0 corresponds to %s)
+
+    ; Call printf
+    call printf
 
     ; Exit the program
-    mov rax, 60       ; syscall number for sys_exit
-    xor rdi, rdi      ; exit code 0
-    syscall           ; make syscall
+    mov eax, 0
+    ret
