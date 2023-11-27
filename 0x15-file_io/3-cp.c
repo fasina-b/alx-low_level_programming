@@ -1,0 +1,68 @@
+#include "main.h"
+
+#define BUFFER_SIZE 1024
+
+/**
+ * out_err - Prints error message and exits 
+ * @code: Exit code.
+ * @msg: Error message.
+ */
+void out_err(int create, char *word)
+{
+/* Use dprintf to print the error message to standard error */
+dprintf(STDERR_FILENO, "%s\n", word);
+exit(create);
+}
+
+/**
+ * main - Copies a file to another file.
+ * @argc: Number of arguments.
+ * @argv: The arguments.
+ * Return: 0 on success.
+ */
+int main(int argc, char *argv[])
+{
+int ffildes;
+int tfildes;
+int rbytes;
+int wbytes;
+
+char mem[BUFFER_SIZE];
+
+/* Check if the correct number of arguments is given */
+if (argc != 3)
+	out_err(97, "Usage: cp file_from file_to");
+
+/* Open source file for reading */
+ffildes = open(argv[1], O_RDONLY);
+if (ffildes == -1)
+	out_err(98, "Error: Can't read from file");
+
+/* Open or create destination file for writing, with specified permissions */
+tfildes = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0664);
+if (tfildes == -1)
+	out_err(99, "Error: Can't write to file");
+
+/* Read from source file and write to destination file in chunks */
+while ((rbytes = read(ffildes, mem, BUFFER_SIZE)) > 0)
+{
+/* Writes read data to destination file */
+wbytes = write(tfildes, mem, rbytes);
+/* Check if write ops was successful */
+if (wbytes != rbytes)
+	out_err(99, "Error: Can't write to file");
+}
+
+/* Check for errors during read ops */
+if (rbytes == -1)
+	out_err(98, "Error: Can't read from file");
+
+/* Close file descriptors */
+if (close(ffildes) == -1)
+	out_err(100, "Error: Can't close file descriptor");
+
+if (close(tfildes) == -1)
+	out_err(100, "Error: Can't close file descriptor");
+
+return (0);
+}
