@@ -11,14 +11,18 @@
  */
 ssize_t read_textfile(const char *filename, size_t letters)
 {
+int fildes;
+char *mem;
+ssize_t rbytes;
+ssize_t wbytes;
+
 if (filename == NULL)
 	return (0); /* Returns zero if fillename is null */
 
-int fildes = open(filename, O_RDONLY);
+fildes = open(filename, O_RDONLY);
 if (fildes == -1)
 	return (0); /* Returns zero if file cant be opened */
 
-char *mem;
 
 mem = malloc(letters);
 if (mem == NULL)
@@ -27,16 +31,16 @@ if (mem == NULL)
 	return (0); /* Returns zero if memory allocation fails */
 }
 
-ssize_t rbyte = read(fildes, mem, letters);
-if (rbyte == -1)
+rbytes = read(fildes, mem, letters);
+if (rbytes == -1)
 {
 	close(fildes);
 	free(mem);
 	return (0); /* Returns zero if read fails */
 }
 
-ssize_t wbytes = write(STDOUT_FILENO, mem, rbytes);
-if (wbyte == -1 || (size_t)wbytes != (size_t)rbytes)
+wbytes = write(STDOUT_FILENO, mem, rbytes);
+if (wbytes == -1 || (size_t)wbytes != (size_t)rbytes)
 {
 	close(fildes);
 	free(mem);
