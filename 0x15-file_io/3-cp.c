@@ -3,9 +3,9 @@
 #define BUFFER_SIZE 1024
 
 /**
- * out_err - Prints error message and exits 
- * @code: Exit code.
- * @msg: Error message.
+ * out_err - Prints error message and exits
+ * @create: Exit code.
+ * @word: Error message.
  */
 void out_err(int create, char *word)
 {
@@ -22,13 +22,9 @@ exit(create);
  */
 int main(int argc, char *argv[])
 {
-int ffildes;
-int tfildes;
-int rbytes;
-int wbytes;
+int ffildes, tfildes, rbytes, wbytes;
 
 char mem[BUFFER_SIZE];
-
 /* Check if the correct number of arguments is given */
 if (argc != 3)
 	out_err(97, "Usage: cp file_from file_to");
