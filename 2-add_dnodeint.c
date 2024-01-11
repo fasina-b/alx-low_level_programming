@@ -2,8 +2,8 @@
 #include <stdlib.h>
 
 /**
- * add_dnodeint - Adds a new node 
- * @head: Pointer 
+ * add_dnodeint - Adds a new node
+ * @head: Pointer
  * @n: Value
  * Return: Address of the new element, or NULL if it failed.
  */

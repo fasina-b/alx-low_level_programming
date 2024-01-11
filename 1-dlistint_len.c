@@ -2,7 +2,7 @@
 
 /**
  * dlistint_len - Returns linked dlistint_t list.
- * @h: Pointer 
+ * @h: Pointer
  * Return: Number of elements in the list.
  */
 size_t dlistint_len(const dlistint_t *h)
