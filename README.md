@@ -1,1 +1,1 @@
-A directory for C - Hello, World
+A directory for Doubly linked lists
